@@ -52,7 +52,7 @@ const GetRemoteDataHandler = {
           }
     
           try {
-            const response = await getRemoteData(`http://34.145.52.251:5000/mp3?kwds=${encodeURIComponent(keywords)}`);
+            const response = await getRemoteData(`https://howdyhackgcp.com/mp3?kwds=${encodeURIComponent(keywords)}`);
             if (response.processing) {
                 return handlerInput.responseBuilder
                     .speak("Your karaoke is being prepared")
@@ -61,7 +61,7 @@ const GetRemoteDataHandler = {
             console.log(response);
             const stream = STREAMS[0];
             stream.token = `kara-eco-${Math.random().toString().replace(/\./g, '')}`;
-            stream.url = `https://34.145.52.251:5000/getmp3?name=${response.name}`;
+            stream.url = `https://howdyhackgcp.com/getmp3?name=${response.name}`;
             stream.metadata.title = response.title;
             stream.metadata.subtitle = response.artist_name;
 
@@ -181,6 +181,35 @@ const ErrorHandler = {
   },
 };
 
+const PlaybackStoppedIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'PlaybackController.PauseCommandIssued'
+      || handlerInput.requestEnvelope.request.type === 'AudioPlayer.PlaybackStopped';
+  },
+  handle(handlerInput) {
+    handlerInput.responseBuilder
+      .addAudioPlayerClearQueueDirective('CLEAR_ALL')
+      .addAudioPlayerStopDirective();
+
+    return handlerInput.responseBuilder
+      .getResponse();
+  },
+};
+
+// const PlaybackStartedIntentHandler = {
+//   canHandle(handlerInput) {
+//     return handlerInput.requestEnvelope.request.type === 'AudioPlayer.PlaybackStarted';
+//   },
+//   handle(handlerInput) {
+//     handlerInput.responseBuilder
+//       .addAudioPlayerClearQueueDirective('CLEAR_ENQUEUED');
+
+//     return handlerInput.responseBuilder
+//       .getResponse();
+//   },
+// };
+
+
 function getRemoteData(url) {
   return new Promise((resolve, reject) => {
     const client = url.startsWith('https') ? require('https') : require('http');
@@ -220,6 +249,8 @@ exports.handler = skillBuilder
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler,
+    PlaybackStoppedIntentHandler,
+    // PlaybackStartedIntentHandler,
   )
   .addErrorHandlers(ErrorHandler)
   .lambda();
