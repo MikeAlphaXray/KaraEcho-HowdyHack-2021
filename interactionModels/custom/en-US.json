@@ -1,0 +1,149 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "kara eco",
+      "intents": [
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "PlayStreamIntent",
+          "slots": [],
+          "samples": [
+            "to play",
+            "to start playing",
+            "to begin playing"
+          ]
+        },
+        {
+          "name": "AboutIntent",
+          "slots": [],
+          "samples": [
+            "about",
+            "what is this",
+            "tell me about this"
+          ]
+        },
+        {
+          "name": "AMAZON.PauseIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ResumeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.LoopOnIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NextIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PreviousIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.RepeatIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ShuffleOnIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StartOverIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.LoopOffIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ShuffleOffIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": [
+            "help me",
+            "how does this work",
+            "what should i do"
+          ]
+        },
+        {
+          "name": "StartKaraokeIntent",
+          "slots": [
+            {
+              "name": "SongName",
+              "type": "AMAZON.SearchQuery",
+              "samples": [
+                "play {SongName}"
+              ]
+            }
+          ],
+          "samples": [
+            "Play {SongName}"
+          ]
+        },
+        {
+          "name": "PlaySongIntent",
+          "slots": [
+            {
+              "name": "SongNameA",
+              "type": "AMAZON.Actor"
+            }
+          ],
+          "samples": [
+            "{SongNameA}",
+            "Play {SongNameA}"
+          ]
+        }
+      ],
+      "types": []
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "StartKaraokeIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "SongName",
+              "type": "AMAZON.SearchQuery",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.909572363700.941607861076"
+              }
+            }
+          ]
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.909572363700.941607861076",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Please ask to play a song"
+          }
+        ]
+      }
+    ]
+  },
+  "version": "5"
+}
